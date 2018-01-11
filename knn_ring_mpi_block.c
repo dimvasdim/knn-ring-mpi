@@ -113,7 +113,8 @@ int main(int argc, char **argv)
   int **ind = alloc_2d_int(chunk, k);
 
   init_neighbors();
-
+  
+  MPI_Barrier(MPI_COMM_WORLD);
   if (rank == 0)
   {
     gettimeofday (&startwtime, NULL);
@@ -135,6 +136,7 @@ int main(int argc, char **argv)
     swap_tables(temp, new_obs);
     knn_search(new_obs, obs, dis, ind, i);
   }
+  MPI_Barrier(MPI_COMM_WORLD);
   if (rank == 0)
   {
     gettimeofday (&endwtime, NULL);
@@ -172,7 +174,8 @@ int main(int argc, char **argv)
 
   //Creation of a temporary array for the labels received.
   int *temp_labels = (int *)malloc(chunk * sizeof(int));
-
+  
+  MPI_Barrier(MPI_COMM_WORLD);
   if (rank == 0)
   {
     gettimeofday (&startwtime, NULL);
@@ -197,6 +200,7 @@ int main(int argc, char **argv)
   local_sum = matching(lab, labels);
   MPI_Reduce(&local_sum, &total_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   //show_labels(lab);
+  MPI_Barrier(MPI_COMM_WORLD);
   if (rank == 0)
   {
     gettimeofday (&endwtime, NULL);
