@@ -146,11 +146,6 @@ int main(int argc, char **argv)
     //show_results(dis, ind);
   }
 
-  /**
-  printf("\n \n \n");
-  show_results(dis, ind);
-  printf("\n \n \n");**/
-
   free_d(obs); //Don't need the observations anymore.
   free_d(new_obs);
   free_d(temp);
